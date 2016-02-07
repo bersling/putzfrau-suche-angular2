@@ -28,14 +28,15 @@
 		<div class="cards-wrapper">
 			<div class="search-card mb" *ngFor="#card of cards">
 				<span class="navbar">
-					<!--a href="" ui-sref="submit({cc:cc || 'de', key: key, ad: ad._id})">
-						<i class="fa fa-pencil-square-o edit" ng-if="ad.key && ad.key === key || isAdmin()" ></i>
+					<a [routerLink]="['/CardForm', {cc:cc || 'de', key: key, card: card._id}]">
+						<i class="fa fa-pencil-square-o edit"></i>
 					</a>
 					&nbsp;
-					<i class="fa fa-trash-o remove" ng-if="ad.key && ad.key === key || isAdmin()" ng-click="deleteAd(ad)"></i-->
+					<!--*ngIf="card.key && card.key === key || isAdmin()"-->
+					<i class="fa fa-trash-o remove"  (click)="deleteCard(card)"></i>
 				</span>
-				<!--img class="card-img" ng-if="getImageUrl(ad.pic)" ng-src="{{getImageUrl(ad.pic)}}" alt="Profilbild">
-				<img class="card-img" ng-if="!getImageUrl(ad.pic)" src="/img/pf.png" alt="Putzfrau Bild"-->
+				<img class="card-img" *ngIf="getImageUrl(card.pic)" src="{{getImageUrl(card.pic)}}" alt="Profilbild">
+				<img class="card-img" *ngIf="!getImageUrl(card.pic)" src="/img/pf.png" alt="Putzfrau Bild">
 
 				<h4 class="first">{{card.name}}</h4>
 				<p class="age">Alter: {{card.age}}</p>
@@ -45,7 +46,7 @@
 				<p><a [routerLink]="['/Contact', {cc: cc || 'de', card: card._id}]" class="email">Nachricht senden</a></p>
 				<p class="clearfix" *ngIf="card.languages" style="position: absolute; bottom: 0; right: 10px">
 		    	<span ng-repeat="(language, b) in card.languages">
-		    		<span class="icon-wrapper flag-size-sm inline-block" ngIf="b">
+		    		<span class="icon-wrapper flag-size-sm inline-block" *ngIf="b">
 		    			<span class="flag-icon flag-icon-{{language}} rounded"></span>
 		    		</span>
 		    	</span>

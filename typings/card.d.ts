@@ -6,6 +6,6 @@ declare type Card = {
 	description: string,
 	email: string,
 	price: number,
-	languages: Object
+	languages: Object,
 	pic: string, //some Id
 }

@@ -1,6 +1,5 @@
 import {Cards} from './cards';
 
-
 if (Meteor.isServer) {
 	Meteor.methods({
 
@@ -15,6 +14,11 @@ if (Meteor.isServer) {
 			};
 			Email.send(optionsSendInfo);
 		},
+
+		deleteCard: function(id) {
+			console.log(id);
+			Cards.remove({_id: id});
+		}
 
 	});
 }

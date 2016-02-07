@@ -38,27 +38,23 @@ export class CardForm {
 
 	selectFile(event): void {
 
-		FS.Utility.eachFile(event, function(file) {
-			Images.insert(file, function(err, fileObj) {
-				if (!err) {
-					// Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
-					this.profilePic = fileObj._id;
-				} else {
-					toastr.warning('Please select an image file (.jpg, .png, ...)');
-				}
-			});
+		var f = event.target.files[0];
+		var that = this;
+
+		Images.insert(f, function(err, fileObj) {
+			if (!err) {
+				// Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
+				that.profilePic = fileObj._id;
+			} else {
+				toastr.warning('Please select an image file (.jpg, .png, ...)');
+			}
 		});
 
-
-		/*
-		var inputValue = $event.target;
-		var f = inputValue.files[0];
-		console.debug("Input File name: " + f.name + " type:" + f.size + " size:" + f.size);*/
 	}
 
 	addCard(card: Card) {
 		if (this.cardForm.valid) {
-			Cards.insert({
+			var c = {
 				name: card.name,
 				description: card.description,
 				plz: card.plz,
@@ -67,7 +63,8 @@ export class CardForm {
 				email: card.email,
 				languages: this.chosenLanguages,
 				pic: this.profilePic
-			});
+			};
+			Cards.insert(c);
 			this.router.parent.navigate(['/CardList'])
 		}
 	}

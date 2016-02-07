@@ -6,6 +6,8 @@ import {CardForm} from '../card-form/card-form';
 
 import {RouterLink} from 'angular2/router';
 
+import {Images} from "/collections/images";
+
 import {MeteorComponent} from 'angular2-meteor';
 
 @Component({
@@ -29,9 +31,27 @@ export class CardList extends MeteorComponent {
         });
     }
 
-    removeCard(card) {
-        Cards.remove(card._id);
+    removeCard(cardId: string) {
+        console.log('hellooo')
+        Cards.remove(cardId);
     }
+
+    getImageUrl (id) {
+        console.log(id);
+        var img = Images.findOne(id);
+        if (img) {
+            return Images.findOne(id).url();
+        }
+    };
+
+    deleteCard (card: Card) {
+        var r = confirm("Möchten Sie das wirklich löschen?");
+        if (r) {
+            console.log(card._id);
+            this.removeCard(card._id);
+            //Meteor.call('deleteCard', card._id);
+        }
+    };
 
     updateDistances() {
         if (this.plz < 1000 || this.plz > 9999) {
