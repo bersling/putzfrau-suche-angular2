@@ -18,18 +18,46 @@ import {MeteorComponent} from 'angular2-meteor';
 export class CardList extends MeteorComponent {
     cards: Mongo.Cursor<Card>;
     plz: ReactiveVar<number> = new ReactiveVar<number>(null);
+    orderParameter: string;
 
     constructor() {
         super();
         this.autorun(() => {
             this.subscribe('cards', this.plz.get(), () => {
-                this.cards = Cards.find({});
+                this.cards = Cards.find({}).fetch();
             }, true);
         });
     }
 
     removeCard(card) {
         Cards.remove(card._id);
+    }
+
+    updateDistances() {
+        if (this.plz < 1000 || this.plz > 9999) {
+            this.orderParameter = '-created';
+        } else {
+            this.orderParameter = 'distance.value';
+
+
+            // TODO: Do the sorting
+            /*
+            var promises = [];
+            var distances = [];
+            angular.forEach(this.cards, function(card: Card) {
+                promises.push($meteor.call('getDistance', $scope.query.plz, ad.plz).then(function(response) {
+                    return response;
+                }));
+            });
+
+            $q.all(promises).then(function(data) {
+                angular.forEach($scope.ads, function(ad, index) {
+                    ad.distance = data[index];
+                });
+            });
+
+            */
+        }
     }
 
 }

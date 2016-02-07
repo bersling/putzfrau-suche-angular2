@@ -5,6 +5,8 @@ import {bootstrap} from 'angular2-meteor';
 import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig, APP_BASE_HREF} from 'angular2/router';
 
 import {CardList} from 'client/card-list/card-list';
+import {CardForm} from 'client/card-form/card-form';
+import {Info} from 'client/info/info';
 
 import 'collections/methods';
 
@@ -17,7 +19,8 @@ import 'collections/methods';
 })
 @RouteConfig([
     { path: '/', as: 'CardList', component: CardList },
-    //{ path: '/party/:partyId', as: 'PartyDetails', component: PartyDetails }
+    { path: '/suche-job-als-putzfrau', as: 'CardForm', component: CardForm },
+    { path: '/info', as: 'Info', component: Info }
 ])
 class Socially {}
 

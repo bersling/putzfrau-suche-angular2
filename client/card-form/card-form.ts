@@ -17,32 +17,38 @@ export class CardForm {
         var fb = new FormBuilder();
         this.cardForm = fb.group({
             name: ['', Validators.required],
+            /*
             description: ['', Validators.required],
             age: ['', Validators.required],
             price: ['', Validators.required],
             plz: ['', Validators.required],
-            email: ['', Validators.required],
+            email: ['', Validators.required],*/
         });
     }
 
     addCard(card: Card) {
-        if (this.cardForm.valid) {
+        console.log('hi')
+        //if (this.cardForm.valid) {
             Cards.insert({
                 name: card.name,
+                /*
                 description: card.description,
                 plz: card.plz,
                 age: card.age,
                 price: card.price,
                 email: card.email
+                */
             });
 
             (<Control>this.cardForm.controls['name']).updateValue('');
+        /*
             (<Control>this.cardForm.controls['description']).updateValue('');
             (<Control>this.cardForm.controls['price']).updateValue('');
             (<Control>this.cardForm.controls['age']).updateValue('');
             (<Control>this.cardForm.controls['email']).updateValue('');
             (<Control>this.cardForm.controls['price']).updateValue('');
+        */
 
-        }
+        //}
     }
 }

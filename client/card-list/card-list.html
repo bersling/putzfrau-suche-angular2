@@ -1,9 +1,69 @@
-<div>
-  <card-form></card-form>
-  <h1>Cards:</h1>
-  <ul>
-    <li *ngFor="#card of cards">
-	    insert stuff
-    </li>
-  </ul>
+<div class="page-wrapper search">
+	<div class="container narrow-width center div-center">
+		<br><br>
+
+		<div class="pull-right">
+			<div class="floating-button">
+				<a [routerLink]="['/CardForm', {key: key, cc: cc || 'de'}]">
+					<div class="icon">
+						<i class="fa fa-plus"></i>
+					</div>
+				</a>
+			</div>
+		</div>
+
+		<div class="vertical-align">
+			<span style="text-align:left">
+				Die Inserate sind maximal drei Monate alt und geordnet nach Datum oder Entfernung.
+			</span>
+		</div>
+
+		<br>
+
+		<div class="search-wrapper">
+			<input [(ngModel)]="plz" (ngModelChange)="updateDistances(plz)" type="number" class="form-control" id="plz-query" placeholder="Ihre Postleitzahl">
+		</div>
+
+		<br>
+		<div class="cards-wrapper">
+			<div class="search-card mb" *ngFor="#card of cards">
+				<span class="navbar">
+					<!--a href="" ui-sref="submit({cc:cc || 'de', key: key, ad: ad._id})">
+						<i class="fa fa-pencil-square-o edit" ng-if="ad.key && ad.key === key || isAdmin()" ></i>
+					</a>
+					&nbsp;
+					<i class="fa fa-trash-o remove" ng-if="ad.key && ad.key === key || isAdmin()" ng-click="deleteAd(ad)"></i-->
+				</span>
+				<!--img class="card-img" ng-if="getImageUrl(ad.pic)" ng-src="{{getImageUrl(ad.pic)}}" alt="Profilbild">
+				<img class="card-img" ng-if="!getImageUrl(ad.pic)" src="/img/pf.png" alt="Putzfrau Bild"-->
+
+				<h4 class="first">{{card.name}}</h4>
+				<p class="age">Alter: {{card.age}}</p>
+				<p class="price">Preis: {{card.price}} CHF/h</p>
+				<!--p class="price" ng-if="query.plz > 1000">Entfernung: {{ad.distance.text}}</p-->
+				<p class="d2">{{card.description}}</p>
+				<p><a ui-sref="contact({cc: cc || 'de', card: card._id})" class="email">Nachricht senden</a></p>
+				<!--p class="clearfix" ng-if="ad.languages" style="position: absolute; bottom: 0; right: 10px">
+		    	<span ng-repeat="(language, b) in ad.languages">
+		    		<span class="icon-wrapper flag-size-sm inline-block" ng-if="b">
+		    			<span class="flag-icon flag-icon-{{language}} rounded"></span>
+		    		</span>
+		    	</span>
+				</p-->
+				<p class="clearing"></p>
+
+			</div>
+			<hr>
+			<div class="center">
+				<a [routerLink]="['/Info', {key: key, cc: cc || 'de'}]">Was muss ich rechtlich alles erledigen?</a>
+				<hr>
+				Kontakt: <a href="mailto:support@putzfrau-suche.ch">support@putzfrau-suche.ch</a>
+				<hr>
+				<br><br><br>
+			</div>
+
+		</div>
+
+
+	</div>
 </div>

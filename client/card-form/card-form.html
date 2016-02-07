@@ -1,39 +1,50 @@
-<form [ngFormModel]="cardForm" class="inserat" #f="ngForm" (submit)="addCard(f.value)">
-	<div class="form-group">
-		<input required ngControl="name" type="text" class="form-control" id="name" name="name" placeholder="Name">
-	</div>
-	<div class="form-group">
-		<input required ngControl="plz" type="number" class="form-control" id="plz" name="plz" placeholder="Postleitzahl" min="1000" max="9999">
-	</div>
-	<div class="form-group">
-		<input required ngControl="age" type="number" class="form-control" id="age" name="age" placeholder="Alter" min="0" max="100">
-	</div>
-	<div class="form-group">
-		<textarea required ngControl="description" type="text" class="form-control description-area" id="description" name="description" placeholder="Beschreiben Sie sich in ein paar Worten." maxlength="500"></textarea>
-	</div>
-	<div class="form-group">
-		<input required ngControl="price" type="number" class="form-control" id="price" name="price" placeholder="Stundenlohn in CHF" min="0" max="100">
-	</div>
-	<!-- TODO: bring back languages -->
-	<!--div class="form-group">
-		<label for="language">Welche Sprachen sprechen Sie?</label>
-		<div>
-      <span ng-repeat="language in languages">
-        <span class="icon-wrapper hoverable flag-size-md inline-block" ng-click="newAd.languages[language] = !newAd.languages[language]">
-          <div class="flag-icon flag-icon-{{language}} rounded" ng-class="{selected: newAd.languages[language]}"></div>
-          <div style="font-size:10px; color: #444">{{language}}</div>
-        </span>
-      </span>
+<div class="page-wrapper submit">
+	<div class="container center">
+		<div class="content-wrapper">
+			<a href="/" ui-sref="home({cc: cc || 'de'})">
+				<img src="/img/cleaning.jpg" style="max-width:300px" alt="Putzmittel Bild">
+			</a>
+			<h1 class="pc" style="margin-top: 30px">Suchen Sie einen Job als Putzfrau?</h1>
+			<h3>Dann sind Sie hier richtig!</h3>
+			<br>
+			<p>
+				Hier können sie ganz einfach und gratis inserieren.
+				<br>
+				Einfach das Formular ausfüllen und absenden.
+			</p>
+			<br>
+			<div class="form-wrapper">
+				<h2>Gratis Inserat</h2>
+				<br>
+				<form [ngFormModel]="cardForm" class="inserat" #f="ngForm" (submit)="addCard(f.value)">
+					<div class="form-group">
+						<input required ngControl="name" type="text" class="form-control" id="name" name="name" placeholder="Name">
+					</div>
+					<!--div class="form-group">
+						<input required ngControl="plz" type="number" class="form-control" id="plz" name="plz" placeholder="Postleitzahl" min="1000" max="9999">
+					</div>
+					<div class="form-group">
+						<input required ngControl="age" type="number" class="form-control" id="age" name="age" placeholder="Alter" min="0" max="100">
+					</div>
+					<div class="form-group">
+						<textarea required ngControl="description" type="text" class="form-control description-area" id="description" name="description" placeholder="Beschreiben Sie sich in ein paar Worten." maxlength="500"></textarea>
+					</div>
+					<div class="form-group">
+						<input required ngControl="price" type="number" class="form-control" id="price" name="price" placeholder="Stundenlohn in CHF" min="0" max="100">
+					</div-->
+					<!-- TODO: bring back languages -->
+					<!--div class="form-group">
+						<input required ngControl="email" type="email" class="form-control" id="email" name="email" placeholder="Kontakt E-Mail">
+					</div-->
+					<div class="clearfix">
+						<button type="submit" class="btn btn-primary">Fertig <i class="fa fa-paper-plane"></i></button>
+					</div>
+				</form>
+			</div>
+			<br>
+			Ihr Inserat wird für 3 Monate aufgeschaltet. Danach werden alle Daten wieder gelöscht.
+			<br><br>
 		</div>
-	</div-->
-	<!--div class="form-group">
-		<label for="pic">Profilbild:</label>
-		<input required custom-on-change="uploadFile" type="file" class="form-control fileinput" id="pic" name="pic">
-	</div-->
-	<div class="form-group">
-		<input required ngControl="email" type="email" class="form-control" id="email" name="email" placeholder="Kontakt E-Mail">
 	</div>
-	<div class="clearfix">
-		<button type="submit" class="btn btn-primary">Fertig <i class="fa fa-paper-plane"></i></button>
-	</div>
-</form>
+
+</div>
