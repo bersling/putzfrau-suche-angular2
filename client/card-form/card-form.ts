@@ -12,6 +12,8 @@ import {Cards} from 'collections/cards';
 })
 export class CardForm {
     cardForm: ControlGroup;
+    availableLanguages: Array<string>;
+    chosenLanguages: Object;
 
     constructor() {
         var fb = new FormBuilder();
@@ -22,20 +24,22 @@ export class CardForm {
             price: ['', Validators.required],
             plz: ['', Validators.required],
             email: ['', Validators.required],
+            languages: [{}, Validators.required],
         });
+        this.availableLanguages = ['de', 'fr', 'it', 'hr', 'al', 'gb', 'pt', 'es', 'tr', 'in', 'nl', 'ru', 'cn', 'th', 'mk', 'hu'];
+        this.chosenLanguages = {};
     }
 
     addCard(card: Card) {
         console.log('hi')
-        //if (this.cardForm.valid) {
+        if (this.cardForm.valid) {
             Cards.insert({
                 name: card.name,
                 description: card.description,
                 plz: card.plz,
                 age: card.age,
                 price: card.price,
-                email: card.email
-
+                email: card.email,
             });
 
             (<Control>this.cardForm.controls['name']).updateValue('');
@@ -46,6 +50,11 @@ export class CardForm {
             (<Control>this.cardForm.controls['price']).updateValue('');
 
 
-        //}
+        }
     }
+
+    toggleLanguage(l) {
+        this.chosenLanguages[l] = !this.chosenLanguages[l];
+    }
+
 }
