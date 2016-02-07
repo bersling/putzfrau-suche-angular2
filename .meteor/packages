@@ -21,4 +21,4 @@ email
 seba:minifiers-autoprefixer
 fourseven:scss
 twbs:bootstrap
-autopublish
+chrismbeckett:toastr

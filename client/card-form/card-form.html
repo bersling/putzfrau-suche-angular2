@@ -16,7 +16,7 @@
 			<div class="form-wrapper">
 				<h2>Gratis Inserat</h2>
 				<br>
-				<form [ngFormModel]="cardForm" class="inserat" #f="ngForm" (submit)="addCard(f.value)">
+				<form [ngFormModel]="cardForm" class="inserat" #f="ngForm" (ngSubmit)="addCard(f.value)">
 					<div class="form-group">
 						<input required ngControl="name" type="text" class="form-control" id="name" name="name" placeholder="Name">
 					</div>

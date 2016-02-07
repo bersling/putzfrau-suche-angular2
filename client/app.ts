@@ -7,6 +7,7 @@ import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig, APP_BASE_HREF} from 'a
 import {CardList} from 'client/card-list/card-list';
 import {CardForm} from 'client/card-form/card-form';
 import {Info} from 'client/info/info';
+import {Contact} from 'client/contact/contact';
 
 import 'collections/methods';
 
@@ -20,7 +21,8 @@ import 'collections/methods';
 @RouteConfig([
     { path: '/', as: 'CardList', component: CardList },
     { path: '/suche-job-als-putzfrau', as: 'CardForm', component: CardForm },
-    { path: '/info', as: 'Info', component: Info }
+    { path: '/info', as: 'Info', component: Info },
+    { path: '/contact', as: 'Contact', component: Contact }
 ])
 
 class Socially {
