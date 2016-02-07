@@ -22,3 +22,7 @@ seba:minifiers-autoprefixer
 fourseven:scss
 twbs:bootstrap
 chrismbeckett:toastr
+cfs:standard-packages
+cfs:filesystem
+cfs:graphicsmagick
+insecure

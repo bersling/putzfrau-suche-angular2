@@ -8,7 +8,6 @@ import {Cards} from 'collections/cards';
 
 import {MeteorComponent} from 'angular2-meteor';
 
-
 @Component({
 	selector: 'contact'
 })
