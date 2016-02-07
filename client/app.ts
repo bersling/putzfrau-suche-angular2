@@ -22,6 +22,8 @@ import 'collections/methods';
     { path: '/suche-job-als-putzfrau', as: 'CardForm', component: CardForm },
     { path: '/info', as: 'Info', component: Info }
 ])
-class Socially {}
+
+class Socially {
+}
 
 bootstrap(Socially, [ROUTER_PROVIDERS, provide(APP_BASE_HREF, { useValue: '/' })]);

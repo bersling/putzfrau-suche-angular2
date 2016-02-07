@@ -1,6 +1,8 @@
-import {Component, View} from 'angular2/core';
+import {Component, View, NgZone} from 'angular2/core';
 
 import {FormBuilder, Control, ControlGroup, Validators} from 'angular2/common';
+
+import {Router} from 'angular2/router';
 
 import {Cards} from 'collections/cards';
 
@@ -14,9 +16,11 @@ export class CardForm {
     cardForm: ControlGroup;
     availableLanguages: Array<string>;
     chosenLanguages: Object;
+    router: Router;
 
-    constructor() {
+    constructor(_router: Router) {
         var fb = new FormBuilder();
+        this.router = _router;
         this.cardForm = fb.group({
             name: ['', Validators.required],
             description: ['', Validators.required],
@@ -31,7 +35,6 @@ export class CardForm {
     }
 
     addCard(card: Card) {
-        console.log('hi')
         if (this.cardForm.valid) {
             Cards.insert({
                 name: card.name,
@@ -42,18 +45,12 @@ export class CardForm {
                 email: card.email,
             });
 
-            (<Control>this.cardForm.controls['name']).updateValue('');
-            (<Control>this.cardForm.controls['description']).updateValue('');
-            (<Control>this.cardForm.controls['price']).updateValue('');
-            (<Control>this.cardForm.controls['age']).updateValue('');
-            (<Control>this.cardForm.controls['email']).updateValue('');
-            (<Control>this.cardForm.controls['price']).updateValue('');
-
 
         }
     }
 
     toggleLanguage(l) {
+        this.router.parent.navigate(['/CardList'])
         this.chosenLanguages[l] = !this.chosenLanguages[l];
     }
 
