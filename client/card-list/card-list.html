@@ -41,13 +41,14 @@
 				<h4 class="first">{{card.name}}</h4>
 				<p class="age">Alter: {{card.age}}</p>
 				<p class="price">Preis: {{card.price}} CHF/h</p>
-				<!--p class="price" ng-if="query.plz > 1000">Entfernung: {{ad.distance.text}}</p-->
+				<!--p class="price" *ngIf="query.plz > 1000">Entfernung: {{card.distance.text}}</p-->
 				<p class="d2">{{card.description}}</p>
 				<p><a [routerLink]="['/Contact', {cc: cc || 'de', card: card._id}]" class="email">Nachricht senden</a></p>
 				<p class="clearfix" *ngIf="card.languages" style="position: absolute; bottom: 0; right: 10px">
-		    	<span ng-repeat="(language, b) in card.languages">
-		    		<span class="icon-wrapper flag-size-sm inline-block" *ngIf="b">
-		    			<span class="flag-icon flag-icon-{{language}} rounded"></span>
+		    	<span *ngFor="#value of card.languages | values">
+		    		<span class="icon-wrapper flag-size-sm inline-block" *ngIf="value">
+					    <!--TODO: replace de with {{languages}} -->
+		    			<span class="flag-icon flag-icon-de rounded"></span>
 		    		</span>
 		    	</span>
 				</p>

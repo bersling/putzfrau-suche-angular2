@@ -10,12 +10,16 @@ import {Images} from "/collections/images";
 
 import {MeteorComponent} from 'angular2-meteor';
 
+import {ValuesPipe} from 'client/lib/pipes';
+
+
 @Component({
     selector: 'cards-list',
 })
 @View({
     templateUrl: '/client/card-list/card-list.html',
-    directives: [CardForm, RouterLink]
+    directives: [RouterLink],
+    pipes: [ValuesPipe]
 })
 export class CardList extends MeteorComponent {
     cards: Mongo.Cursor<Card>;
@@ -29,15 +33,14 @@ export class CardList extends MeteorComponent {
                 this.cards = Cards.find({}).fetch();
             }, true);
         });
+
     }
 
     removeCard(cardId: string) {
-        console.log('hellooo')
         Cards.remove(cardId);
     }
 
     getImageUrl (id) {
-        console.log(id);
         var img = Images.findOne(id);
         if (img) {
             return Images.findOne(id).url();

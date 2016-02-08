@@ -27,3 +27,4 @@ cfs:filesystem
 cfs:graphicsmagick
 insecure
 autopublish
+underscore
