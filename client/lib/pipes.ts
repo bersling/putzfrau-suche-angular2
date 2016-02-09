@@ -7,6 +7,21 @@ export class ValuesPipe implements PipeTransform {
 	}
 }
 
+@Pipe({
+	name: 'mapToIterable'
+})
+export class MapToIterable {
+	transform(dict: Object): Array {
+		var a = [];
+		for (var key in dict) {
+			if (dict.hasOwnProperty(key)) {
+				a.push({key: key, val: dict[key]});
+			}
+		}
+		return a;
+	}
+}
+
 /*
 @Pipe({ name: 'mapToIterable',  pure: false })
 export class MapToIterablePipe implements PipeTransform {

@@ -2,7 +2,7 @@ import {Component, View, NgZone} from 'angular2/core';
 
 import {FormBuilder, Control, ControlGroup, Validators} from 'angular2/common';
 
-import {Router} from 'angular2/router';
+import {Router, RouteParams} from 'angular2/router';
 
 import {Cards} from 'collections/cards';
 import {Images} from 'collections/images';
@@ -19,8 +19,23 @@ export class CardForm {
 	chosenLanguages: Object;
 	profilePic: string;
 	router: Router;
+	card: Card;
 
-	constructor(_router: Router) {
+	constructor(
+			_router: Router,
+			private _routeParams:RouteParams
+	) {
+		// if it's to edit an existing card
+		var cardId = _routeParams.get('card');
+		var key = _routeParams.get('key');
+		if (cardId) {
+			var card = Cards.findOne({_id: cardId});
+			if (key === card.key) {
+				this.card = card;
+			}
+		} else {
+			this.card = {};
+		}
 		var fb = new FormBuilder();
 		this.router = _router;
 		this.cardForm = fb.group({
@@ -50,27 +65,33 @@ export class CardForm {
 			}
 		});
 
-	}
+	};
 
 	addCard(card: Card) {
+		Meteor.call('deleteCard', card._id);
 		if (this.cardForm.valid) {
-			var c = {
-				name: card.name,
-				description: card.description,
-				plz: card.plz,
-				age: card.age,
-				price: card.price,
-				email: card.email,
-				languages: this.chosenLanguages,
-				pic: this.profilePic
-			};
-			Cards.insert(c);
-			this.router.parent.navigate(['/CardList'])
+			var c = this.card;
+			c.pic = this.profilePic;
+			c.languages = this.chosenLanguages;
+			if (c._id) {
+				Meteor.call('updateCard', c);
+				//Meteor.call('deleteCard', c._id);
+			} else {
+				c.key = Math.random().toString(36).substr(2, 12);
+				c.created = new Date().getTime();
+				Cards.insert(c);
+				var url = window.location.origin + '?key=' + c.key;
+				Meteor.call('sendMailOnCreation', card, url);
+			}
+
+			this.router.parent.navigate(['CardList', {key: c.key}]);
+		} else {
+			toastr.warning('Please fill out all fields correctly')
 		}
-	}
+	};
 
 	toggleLanguage(l) {
 		this.chosenLanguages[l] = !this.chosenLanguages[l];
-	}
+	};
 
 }

@@ -11,6 +11,9 @@ import {Contact} from 'client/contact/contact';
 
 import 'collections/methods';
 
+import {enableProdMode} from 'angular2/core';
+enableProdMode();
+
 @Component({
     selector: 'app'
 })
