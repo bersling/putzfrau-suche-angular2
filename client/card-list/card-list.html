@@ -25,7 +25,10 @@
 		</div>
 
 		<br>
-		<div class="cards-wrapper">
+		<div *ngIf="loading">
+			Loading...
+		</div>
+		<div class="cards-wrapper" *ngIf="!loading">
 			<div class="search-card mb" *ngFor="#card of cards">
 				<span class="navbar">
 					<a [routerLink]="['/CardForm', {key: key, card: card._id}]" *ngIf="card.key === key">
@@ -43,6 +46,7 @@
 				<!--p class="price" *ngIf="query.plz > 1000">Entfernung: {{card.distance.text}}</p-->
 				<p class="d2">{{card.description}}</p>
 				<p><a [routerLink]="['/Contact', {card: card._id}]" class="email">Nachricht senden</a></p>
+
 				<p class="clearfix" *ngIf="card.languages" style="position: absolute; bottom: 0; right: 10px">
 		    	<span *ngFor="#kvp of card.languages | mapToIterable">
 		    		<span class="icon-wrapper flag-size-sm inline-block" *ngIf="kvp.val">

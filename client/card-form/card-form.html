@@ -16,7 +16,7 @@
 			<div class="form-wrapper">
 				<h2>Gratis Inserat</h2>
 				<br>
-				<form [ngFormModel]="cardForm" class="inserat" #f="ngForm" (ngSubmit)="addCard(f.value)">
+				<form [ngFormModel]="cardForm" class="inserat" #f="ngForm" (ngSubmit)="addCard()">
 					<div class="form-group">
 						<input required ngControl="name" [(ngModel)]="card.name" type="text" class="form-control" id="name" name="name" placeholder="Name">
 					</div>
@@ -37,7 +37,7 @@
 						<div>
 					  	<span *ngFor="#language of availableLanguages">
 					  		<span class="icon-wrapper hoverable flag-size-md inline-block" (click)="toggleLanguage(language)">
-					  			<div class="flag-icon flag-icon-{{language}} rounded" [ngClass]="{selected: chosenLanguages[language]}"></div>
+					  			<div class="flag-icon flag-icon-{{language}} rounded" [ngClass]="{selected: card.languages[language]}"></div>
 					  			<div style="font-size:10px; color: #444">{{language}}</div>
 					  		</span>
 					  	</span>

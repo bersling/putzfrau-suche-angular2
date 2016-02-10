@@ -34,7 +34,19 @@ if (Meteor.isServer) {
 
 		updateCard: function(c) {
 			Cards.update({_id: c._id}, c);
-		}
+		},
+
+		getDistance: function(origin, dest) {
+
+			var distanceUrl = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" +
+					origin + ",Schweiz&destinations=" + dest +
+					",Schweiz&key=AIzaSyBTGVUac5RqaXPe_Dfsooz5ake9O0X2-Hs";
+			var result = HTTP.get(distanceUrl);
+
+			if (result.data.rows && result.data.rows[0]) {
+				return result.data.rows[0].elements[0].distance;
+			}
+		},
 
 	});
 }

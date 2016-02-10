@@ -16,7 +16,6 @@ import {Images} from 'collections/images';
 export class CardForm {
 	cardForm: ControlGroup;
 	availableLanguages: Array<string>;
-	chosenLanguages: Object;
 	profilePic: string;
 	router: Router;
 	card: Card;
@@ -34,7 +33,9 @@ export class CardForm {
 				this.card = card;
 			}
 		} else {
-			this.card = {};
+			this.card = {
+				languages: {},
+			};
 		}
 		var fb = new FormBuilder();
 		this.router = _router;
@@ -48,7 +49,6 @@ export class CardForm {
 			languages: [{}, Validators.required],
 		});
 		this.availableLanguages = ['de', 'fr', 'it', 'hr', 'al', 'gb', 'pt', 'es', 'tr', 'in', 'nl', 'ru', 'cn', 'th', 'mk', 'hu'];
-		this.chosenLanguages = {};
 	}
 
 	selectFile(event): void {
@@ -67,31 +67,30 @@ export class CardForm {
 
 	};
 
-	addCard(card: Card) {
-		Meteor.call('deleteCard', card._id);
-		if (this.cardForm.valid) {
-			var c = this.card;
-			c.pic = this.profilePic;
-			c.languages = this.chosenLanguages;
+	addCard() {
+		var c = this.card;
+		if (this.cardForm.valid && (c.pic || this.profilePic)) {
+			if (this.profilePic) {
+				c.pic = this.profilePic;
+			}
 			if (c._id) {
 				Meteor.call('updateCard', c);
-				//Meteor.call('deleteCard', c._id);
 			} else {
 				c.key = Math.random().toString(36).substr(2, 12);
 				c.created = new Date().getTime();
 				Cards.insert(c);
 				var url = window.location.origin + '?key=' + c.key;
-				Meteor.call('sendMailOnCreation', card, url);
+				Meteor.call('sendMailOnCreation', c, url);
 			}
 
 			this.router.parent.navigate(['CardList', {key: c.key}]);
 		} else {
-			toastr.warning('Please fill out all fields correctly')
+			toastr.warning('Please fill out all fields')
 		}
 	};
 
 	toggleLanguage(l) {
-		this.chosenLanguages[l] = !this.chosenLanguages[l];
+		this.card.languages[l] = !this.card.languages[l];
 	};
 
 }

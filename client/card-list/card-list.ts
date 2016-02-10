@@ -10,7 +10,7 @@ import {Images} from "/collections/images";
 
 import {MeteorComponent} from 'angular2-meteor';
 
-import {MapToIterable} from 'client/lib/pipes';
+import {MapToIterable, OrderByPipe} from 'client/lib/pipes';
 
 
 @Component({
@@ -19,20 +19,28 @@ import {MapToIterable} from 'client/lib/pipes';
 @View({
     templateUrl: '/client/card-list/card-list.html',
     directives: [RouterLink],
-    pipes: [MapToIterable]
+    pipes: [MapToIterable, OrderByPipe]
 })
 export class CardList extends MeteorComponent {
     cards: Mongo.Cursor<Card>;
     plz: ReactiveVar<number> = new ReactiveVar<number>(null);
     orderParameter: string;
     key: string;
+    sortValue: ReactiveVar = new ReactiveVar(1);
+    loading: boolean;
+
+    sortObject: ReactiveVar<Object> = new ReactiveVar<Object>({name: this.sortValue.get()});
 
     constructor(private _routeParams:RouteParams) {
         super();
+        console.log(this.sortObject.get())
         this.key = _routeParams.get('key');
         this.autorun(() => {
-            this.subscribe('cards', undefined, this.plz.get(), () => {
-                this.cards = Cards.find({});
+            let options = {
+                sort: this.sortObject.get()
+            }
+            this.subscribe('cards', options, () => {
+                this.cards = Cards.find({}, {sort: this.sortObject.get()});
             }, true);
         });
     }
@@ -57,12 +65,18 @@ export class CardList extends MeteorComponent {
 
     updateDistances() {
         if (this.plz < 1000 || this.plz > 9999) {
-            this.orderParameter = '-created';
+            this.loading = false;
+            this.sortObject.set({created: -1});
         } else {
-            this.orderParameter = 'distance.value';
+            this.loading = true;
+
+            this.cards.forEach((card:Card) => {
+                //TODO: check out how to $q [3h for some understanding]
+            });
 
 
-            // TODO: Do the sorting
+            // TODO: Do the sorting [30']
+            //
             /*
             var promises = [];
             var distances = [];
@@ -80,6 +94,17 @@ export class CardList extends MeteorComponent {
 
             */
         }
-    }
+    };
+
+    changeDirection() {
+        if (this.sortValue.get() === 1) {
+            this.sortValue.set(-1);
+        } else if (this.sortValue.get() === -1) {
+            this.sortValue.set(1);
+        } else {
+            console.log('problem');
+        }
+        this.sortObject.set({created: this.sortValue.get()});
+    };
 
 }
