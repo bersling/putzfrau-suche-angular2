@@ -9,5 +9,6 @@ declare type Card = {
 	languages?: Object,
 	pic?: string, //some Id
 	created?: number,
-	key?: string
+	key?: string,
+	distance?: number
 }

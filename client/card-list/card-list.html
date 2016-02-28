@@ -43,7 +43,7 @@
 				<h4 class="first">{{card.name}}</h4>
 				<p class="age">Alter: {{card.age}}</p>
 				<p class="price">Preis: {{card.price}} CHF/h</p>
-				<!--p class="price" *ngIf="query.plz > 1000">Entfernung: {{card.distance.text}}</p-->
+				<p class="price" *ngIf="cardMeta[card._id] && cardMeta[card._id].distance">Entfernung: {{cardMeta[card._id].distance.text}}</p>
 				<p class="d2">{{card.description}}</p>
 				<p><a [routerLink]="['/Contact', {card: card._id}]" class="email">Nachricht senden</a></p>
 

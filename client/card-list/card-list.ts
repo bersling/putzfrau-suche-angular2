@@ -28,12 +28,13 @@ export class CardList extends MeteorComponent {
     key: string;
     sortValue: ReactiveVar = new ReactiveVar(1);
     loading: boolean;
+    cardMeta: Object;
 
     sortObject: ReactiveVar<Object> = new ReactiveVar<Object>({name: this.sortValue.get()});
 
     constructor(private _routeParams:RouteParams) {
         super();
-        console.log(this.sortObject.get())
+        this.cardMeta = {};
         this.key = _routeParams.get('key');
         this.autorun(() => {
             let options = {
@@ -70,9 +71,17 @@ export class CardList extends MeteorComponent {
         } else {
             this.loading = true;
 
+            var that = this;
             this.cards.forEach((card:Card) => {
-                //TODO: check out how to $q [3h for some understanding]
+                Meteor.call('getDistance', this.plz, card.plz, function(err, resp) {
+                    that.cardMeta[card._id] = that.cardMeta[card._id] || {};
+                    that.cardMeta[card._id].distance = resp;
+                    console.log(resp)
+                });
             });
+
+            this.sortObject.set({ 'distance.value': -1 });
+            this.loading = false;
 
 
             // TODO: Do the sorting [30']

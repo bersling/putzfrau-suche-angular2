@@ -44,6 +44,7 @@ if (Meteor.isServer) {
 			var result = HTTP.get(distanceUrl);
 
 			if (result.data.rows && result.data.rows[0]) {
+				console.log(result.data.rows[0].elements[0].distance);
 				return result.data.rows[0].elements[0].distance;
 			}
 		},
